@@ -1,6 +1,5 @@
 name: Python CI
 
-# Trigger the workflow on any push to the main branch or pull request
 on:
   push:
     branches:
@@ -11,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the code from the repository
+      # Step 1: Check out the code
       - name: Check out code
-        uses: actions/checkout@v3  # Using v3
+        uses: actions/checkout@v3
 
-      # Step 2: Set up Python environment
+      # Step 2: Set up Python
       - name: Set up Python
-        uses: actions/setup-python@v4  # Using v4
+        uses: actions/setup-python@v4
         with:
           python-version: '3.8'
 
@@ -26,14 +25,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install pytest  # Ensure pytest is installed
 
-      # Debug Step: Confirm Python and pip are installed
-      - name: Verify Python and pip installation
+      # Step 4: Verify installation
+      - name: Verify installation
         run: |
           python --version
           pip --version
-          pytest --version  # Check if pytest is installed
+          pytest --version  # Ensure pytest is installed
 
-      # Step 4: Run tests
+      # Step 5: Run tests
       - name: Run tests
         run: pytest
